@@ -7,6 +7,7 @@ import { User } from "./types";
 
 export interface GithubUsersState {
   loading: boolean;
+  error: null | string;
   items: { [key: string]: User };
   list: string[];
   sorting: Sorting;
@@ -14,6 +15,7 @@ export interface GithubUsersState {
 }
 
 const initialState: GithubUsersState = {
+  error: null,
   loading: false,
   items: {},
   list: [],
@@ -121,13 +123,24 @@ export const selectItems = createSelector(
   }
 );
 
+export const selectError = createSelector(
+  selfSelector,
+  (state: GithubUsersState) => {
+    return { hasError: !!state.error, error: state.error };
+  }
+);
+
 export const searchByLogin = (login: string): AppThunk => async (dispatch) => {
+  if (login.length < 2) {
+    dispatch(githubUsersSlice.actions.reset());
+    return;
+  }
   dispatch(githubUsersSlice.actions.set({ loading: true }));
   try {
     const items = await searchUsersByLogin(login);
     dispatch(githubUsersSlice.actions.load(items));
   } catch (e) {
-    dispatch(githubUsersSlice.actions.reset());
+    dispatch(githubUsersSlice.actions.reset({ error: e.message }));
   }
 };
 

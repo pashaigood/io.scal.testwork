@@ -7,22 +7,27 @@ import {
   TableCell,
   TableBody,
 } from "@material-ui/core";
+import styled from "styled-components";
 import { Sorting } from "../../../types";
 import { User } from "../types";
 import TableSortingHead from "./TableSortingHead";
 import TableSortingCell from "./TableSortingCell";
 
+const StyledTableContainer = styled(TableContainer)`
+  max-height: 100%;
+`;
+
 interface UsersListProps {
-  items: User[];
+  items?: User[];
   sorting: Sorting;
   onSort: (name: string) => void;
 }
 
 function TableView(props: UsersListProps) {
-  const { items, sorting, onSort } = props;
+  const { items = [], sorting, onSort } = props;
 
   return (
-    <TableContainer>
+    <StyledTableContainer>
       <Table stickyHeader>
         <TableSortingHead sorting={sorting} onSort={onSort}>
           <TableRow>
@@ -45,7 +50,7 @@ function TableView(props: UsersListProps) {
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </StyledTableContainer>
   );
 }
 

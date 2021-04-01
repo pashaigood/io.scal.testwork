@@ -1,7 +1,8 @@
 import React, { ChangeEvent, useCallback } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { Paper, TablePagination } from "@material-ui/core";
+import { Box, Paper, TablePagination, Typography } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 import {
   selectItems,
   searchByLogin,
@@ -10,6 +11,7 @@ import {
   changeSizeOnPage,
   selectPagination,
   selectSorting,
+  selectError,
 } from "./githubUsersSlice";
 import LoginSearchForm from "./components/LoginSearchForm";
 import TableView from "./components/TableView";
@@ -33,6 +35,7 @@ function GithubUsers(props: GithubUsersProps) {
   const users = useSelector(selectItems);
   const pagination = useSelector(selectPagination);
   const sorting = useSelector(selectSorting);
+  const { hasError, error } = useSelector(selectError);
 
   const handlePageChange = useCallback(
     (e, page: number) => {
@@ -51,7 +54,24 @@ function GithubUsers(props: GithubUsersProps) {
   return (
     <Container {...props}>
       <LoginSearchForm onSearch={actions.searchByLogin} />
-      <TableView items={users} sorting={sorting} onSort={actions.toggleSort} />
+      <Box overflow={"hidden"}>
+        <TableView
+          items={users}
+          sorting={sorting}
+          onSort={actions.toggleSort}
+        />
+        {hasError ? (
+          <Alert severity="error">{error}</Alert>
+        ) : (
+          !users.length && (
+            <Box p={"10px"}>
+              <Typography align={"center"} variant={"h6"}>
+                Nothing to display
+              </Typography>
+            </Box>
+          )
+        )}
+      </Box>
       <TablePagination
         component="div"
         rowsPerPageOptions={[10, 20, 30]}
