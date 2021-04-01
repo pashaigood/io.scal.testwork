@@ -2,11 +2,7 @@ import React from "react";
 import { Main } from "./pages/Main";
 
 function App() {
-  return (
-    <section>
-      <Main />
-    </section>
-  );
+  return <Main />;
 }
 
 export default App;
