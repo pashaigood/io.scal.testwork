@@ -1,10 +1,26 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+## О задании
+
+### Подготовка
+Для создания проекта я воспользовался официальным шаблоном redux-typescript для create-react-app.
+
+Дополнительно настроил prettier для поддержания кодовой базы в едином стиле и lint-staged для автоматической проверки при создании коммита.
+
+### Решение
+Решение разделено на 3 слоя:
+1. API - получения, форматирование и нормализация данных.
+1. Состояние - хранение и изменение данных.
+1. Пользовательский Интерфейс
+
+Основная часть задания заключалась в создании состояния. Для этого я реализовал простейший шаблон нормализованного хранилища, аналога `EntityState`.
+Из интересного, на что можно обратить внимание, это сортировка как состояние, так как это самая дорогая операция, а пагинация происходит во время выборки данных из хранилища.
+
+С небольшими дополнениями данное решение можно превратить в универсальный конструктор и использовать для любых списочных данных по аналогии с `createEntityAdapter`.
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `yarn start`
+### `npm start`
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -12,12 +28,12 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-### `yarn test`
+### `npm test`
 
 Launches the test runner in the interactive watch mode.<br />
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
+### `npm build`
 
 Builds the app for production to the `build` folder.<br />
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -27,7 +43,7 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
+### `npm eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
